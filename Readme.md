@@ -5,7 +5,7 @@ pip install -r requirements.txt
 ```
 
 
-create a .env file in  your maimn folder  
+create a .env file in  your main folder  
 and Add 
 
 Get your Google Gemini Api Key at: https://aistudio.google.com/app/apikey
