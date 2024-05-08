@@ -15,3 +15,9 @@ GEMINI_API_KEY = "YOUR_GOOGLE_GEMINI_API_KEY"
 ```
 
 
+Run the Code 
+
+```
+python gradio_ui.py
+```
+
