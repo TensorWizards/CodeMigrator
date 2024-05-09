@@ -1,9 +1,10 @@
 import gradio as gr
-from main import codeConvert
+from main import codeConvert,codeExplain
 
 def process_files(files):
     file_names = files[0]
-    return codeConvert(file_names)
+    instructions =  codeExplain(file_names)
+    return codeConvert(instructions,"java")
 
 demo = gr.Interface(
     process_files,

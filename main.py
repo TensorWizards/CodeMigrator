@@ -12,7 +12,7 @@ model = genai.GenerativeModel('gemini-pro')
 
 
 
-def codeConvert(filepath):
+def codeExplain(filepath):
   with open(filepath, 'r') as file:
     content = file.read()
 
@@ -20,9 +20,11 @@ def codeConvert(filepath):
   prompt1 = f"Exlain me this code:\n{content}"
   explainCobol = model.generate_content(prompt1)
 
+  return explainCobol.text
 
+def codeConvert(instructions,language):
 
-  prompt2 = f"Generate a Java Code using Following Instruction :\n{explainCobol.text}"
+  prompt2 = f"Generate a {language} Code using Following Instruction :\n{instructions}"
   codeJava = model.generate_content(prompt2)
 
   return codeJava.text
