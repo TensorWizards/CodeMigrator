@@ -26,20 +26,17 @@ def save_code(file_name):
     generated_code = strip_first_last_line(generated_code)
     save_file(file_name,generated_code)
     
-with gr.Blocks() as demo:
-    with gr.Row():
-        with gr.Column():
-            gr.Interface(
-                process_files,
-                inputs=['files',gr.Dropdown(["python","java"])],
-                outputs=["markdown","markdown"],
-                allow_flagging="never"
-            )
-
-            
-            file_name = gr.Textbox(label="File Name")
-            btn_savecode = gr.Button("Save Code")
-            btn_savecode.click(save_code,inputs=file_name)
+with gr.Blocks(title="CodeMigrator") as demo:
+    gr.Interface(
+        process_files,
+        inputs=['files',gr.Dropdown(["python","java"])],
+        outputs=["markdown","markdown"],
+        allow_flagging="never"
+    )
+    
+    file_name = gr.Textbox(label="File Name")
+    btn_savecode = gr.Button("Save Code")
+    btn_savecode.click(save_code,inputs=file_name)
 
 
 demo.launch()
