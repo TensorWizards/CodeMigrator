@@ -22,16 +22,24 @@ def codeExplain(filepath):
 
   return explainCobol.text
 
+def strip_first_last_line(text):
+    lines = text.splitlines()
+    stripped_lines = lines[1:-1]
+    stripped_text = '\n'.join(stripped_lines)
+    return stripped_text
+
 def codeConvert(instructions,language):
 
   prompt2 = f"Generate a {language} Code using Following Instruction :\n{instructions}"
   codeJava = model.generate_content(prompt2)
 
-  return codeJava.text
+  generated_code =  codeJava.text
+
+  return strip_first_last_line(generated_code)  # removes markdown
 
 
 def save_file(filename,data):
-  folder_path = '.\samples' 
+  folder_path = './samples/' 
   file_name = filename 
   file_path = os.path.join(folder_path, file_name) 
   
