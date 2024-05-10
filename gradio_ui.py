@@ -28,7 +28,7 @@ def save_code(file_name):
     
 with gr.Blocks() as demo:
     with gr.Row():
-        with gr.Column(scale=4, min_width=600):
+        with gr.Column():
             gr.Interface(
                 process_files,
                 inputs=['files',gr.Dropdown(["python","java"])],

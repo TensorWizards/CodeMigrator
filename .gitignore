@@ -1,7 +1,4 @@
 .env
 codemigrate
-flagged
-test.py
-__pycache__
-.gitignore
+__pycache__/
 egp
