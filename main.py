@@ -22,6 +22,14 @@ def codeExplain(filepath):
   return description_response.text
 
 
+def codeExplainFromContent(content):
+
+  description_prompt = f"You will be given legacy code as input. You need to understand the entire code and generate detailed description of it such that the description generated explains all the variables, routines, classes, blocks or other structures present in the legacy code. \n{content}"
+  description_response = model.generate_content(description_prompt)
+
+  return description_response.text
+
+
 def codeConvert(instructions,language):
 
   # Corrected Code Snippet
@@ -52,6 +60,8 @@ def save_file(filename,data):
   # Create the file 
   with open(file_path, 'w') as file: 
       file.write(data)
+
+
 
 
 
