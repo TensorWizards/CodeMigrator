@@ -3,3 +3,5 @@ codemigrate
 flagged
 test.py
 __pycache__
+.gitignore
+egp
