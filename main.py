@@ -30,5 +30,15 @@ def codeConvert(instructions,language):
   return codeJava.text
 
 
+def save_file(filename,data):
+  folder_path = '.\samples' 
+  file_name = filename 
+  file_path = os.path.join(folder_path, file_name) 
+  
+  # Create the file 
+  with open(file_path, 'w') as file: 
+      file.write(data)
+
+
 
 

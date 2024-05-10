@@ -1,3 +1,5 @@
 .env
 codemigrate
 flagged
+test.py
+__pycache__
