@@ -48,11 +48,22 @@ def get_github_contents(githubRepo):
         
     return files_list
 
-def create_new_repo_save_files(repo_name,description="Demo Description",isPublic=False):
+def create_new_repo(repo_name,description="Demo Description",isPublic=False):
+
     repo = user.create_repo(
         name=repo_name,
         description=description,
         private = isPublic
     )
-    print(f"New Repository {repo.name} sucessfully created")
-        
+    
+    return f"igsci/{repo_name}"
+
+
+def save_files_to_repo(repo_name,filename,filecontent,language):
+    repo = g.get_repo(repo_name)
+
+    if language=="python":
+        repo.create_file(f"{filename}.py","test",filecontent)
+    if language=="java":
+        repo.create_file(f"{filename}.java","test",filecontent)
+    
