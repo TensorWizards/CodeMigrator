@@ -1,7 +1,7 @@
 import gradio as gr
 
-from main import codeExplain,codeConvert,save_file,codeExplainFromContent
-from github_handler import  get_github_contents,create_new_repo,save_files_to_repo
+from main import codeExplain, codeConvert, save_file, codeExplainFromContent
+from github_handler import get_github_contents, create_new_repo, save_files_to_repo
 
 instructions = []
 generated_code = []
@@ -9,7 +9,7 @@ lang = ""
 repo_name = ""
 
 
-def process_files(githubRepo,language):
+def process_files(githubRepo, language):
     global instructions
     global generated_code
     global lang
@@ -18,45 +18,34 @@ def process_files(githubRepo,language):
     instructions.clear()
     generated_code.clear()
 
-
     repoContent = get_github_contents(githubRepo)
-    repoContent = repoContent
-
     
-    for j in range(len(repoContent)):
-        i = codeExplainFromContent(repoContent[j])
-        instructions.append(i)
+    for content in repoContent:
+        instruction = codeExplainFromContent(content)
+        instructions.append(instruction)
 
-    for j in range(len(instructions)):
-        g = codeConvert(instructions[j],language)
-        generated_code.append(g)
+    for instruction in instructions:
+        code = codeConvert(instruction, language)
+        generated_code.append(code)
 
-    instructions_str = ""
-    generated_code_str = ""
+    instructions_str = "\n\n".join(instructions)
+    generated_code_str = "\n\n".join(generated_code)
 
-    for i in range(len(instructions)):
-        instructions_str += f"\n\n{instructions[i]}"
-
-    for i in range(len(generated_code)):
-        instructions_str += f"\n\n{generated_code[i]}"
-
-    return [instructions_str,generated_code_str]
+    return [instructions_str, generated_code_str]
 
 
 def push_github(reponame):
-
     global repo_name
     global lang
     global generated_code
 
     repo_name = create_new_repo(reponame)
 
-    for i in range(len(generated_code)):
-        code = strip_first_last_line(generated_code[i])
-        save_files_to_repo(repo_name,f"test{i}",code,lang)
+    for i, code_block in enumerate(generated_code):
+        code = strip_first_last_line(code_block)
+        save_files_to_repo(repo_name, f"test{i}", code, lang)
 
-    print("Sucessfully saved all the files to github")
-
+    print("Successfully saved all the files to GitHub")
 
 
 def strip_first_last_line(text):
@@ -69,25 +58,41 @@ def strip_first_last_line(text):
     return stripped_text
 
 
-
 def save_code(file_name):
     global generated_code
-    generated_code = strip_first_last_line(generated_code)
-    save_file(file_name,generated_code)
-    
+    cleaned_code = [strip_first_last_line(code) for code in generated_code]
+    save_file(file_name, "\n\n".join(cleaned_code))
+
+
+def generate_documentation():
+    global generated_code
+    documentation = ""
+
+    for i, code_block in enumerate(generated_code):
+        doc = f"# Documentation for Code Block {i + 1}\n\n"
+        doc += "## Code:\n"
+        doc += f"```{lang}\n{strip_first_last_line(code_block)}\n```\n\n"
+        doc += "## Explanation:\n"
+        doc += f"{instructions[i]}\n\n"
+        documentation += doc
+
+    return documentation
+
+
 with gr.Blocks(title="CodeMigratorGithub") as demo:
-    gr.Interface(
-        process_files,
-        inputs=['textbox',gr.Dropdown(["python","java"])],
-        outputs=["markdown","markdown"],
-        allow_flagging="never"
-    )
-    
-    file_name = gr.Textbox(label="Enter New Repo Name")
-    btn_savecode = gr.Button("Save Code to Github")
-    btn_savecode.click(push_github,inputs=file_name)
+    with gr.Column():
+        gr.Interface(
+            process_files,
+            inputs=['textbox', gr.Dropdown(["python", "java"])],
+            outputs=["markdown", "markdown"],
+            allow_flagging="never"
+        )
+        file_name = gr.Textbox(label="Enter New Repo Name")
+        btn_savecode = gr.Button("Save Code to GitHub")
+        btn_savecode.click(push_github, inputs=file_name)
 
-
-
+        btn_generate_doc = gr.Button("Generate Documentation")
+        doc_output = gr.Markdown()
+        btn_generate_doc.click(generate_documentation, outputs=doc_output)
 
 demo.launch()
