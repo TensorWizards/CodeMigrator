@@ -40,6 +40,7 @@ def codeConvert(instructions,language):
       f"without any loss in programming feature from the legacy. Your response should be a single python markdown implementing "
       f"all the features mentioned in the description. If the code needs to have custom implementation, then implement it "
       f"using relevant libraries for that task.\nDescription: {instructions}"
+      f"Let the response be the code in markdown format."
   )
 
 
