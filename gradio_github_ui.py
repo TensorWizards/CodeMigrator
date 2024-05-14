@@ -1,7 +1,8 @@
 import gradio as gr
 
-from main import codeExplain, codeConvert, save_file, codeExplainFromContent
-from github_handler import get_github_contents, create_new_repo, save_files_to_repo
+from main import codeExplain,codeConvert,save_file,codeExplainFromContent,solve_error
+from github_handler import  get_github_contents,create_new_repo,save_files_to_repo
+from testrun import run_code
 
 instructions = []
 generated_code = []
