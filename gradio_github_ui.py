@@ -79,6 +79,26 @@ def generate_documentation():
 
     return documentation
 
+def generate_tests():
+    
+    test_results = f""
+    global generated_code
+
+    print(generated_code)
+
+    for i in range(len(generated_code)):
+        code = strip_first_last_line(generated_code[i])
+        error_log = run_code(code)
+        solutionCode = solve_error(code,error_log)
+        test_results += f"\n\n{error_log}\{solutionCode}"
+         
+
+    print(test_results)
+
+    return test_results
+        
+        
+
 
 with gr.Blocks(title="CodeMigratorGithub") as demo:
     with gr.Column():
@@ -92,8 +112,17 @@ with gr.Blocks(title="CodeMigratorGithub") as demo:
         btn_savecode = gr.Button("Save Code to GitHub")
         btn_savecode.click(push_github, inputs=file_name)
 
+
+
+
         btn_generate_doc = gr.Button("Generate Documentation")
         doc_output = gr.Markdown()
         btn_generate_doc.click(generate_documentation, outputs=doc_output)
+
+
+        btn_run_test = gr.Button("Run Test Programs")
+        test_outputs = gr.Textbox()
+        btn_run_test.click(generate_tests, outputs=test_outputs)
+
 
 demo.launch()
