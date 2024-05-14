@@ -19,15 +19,36 @@ def run_file(filename):
         return None
     except Exception as e:
         return f"Error: {str(e)}"
+    
 
-code = ""
+def run_code(code):
+    try:
+        # Execute the file and capture the output
+        result = exec(code)
+        
+        # Check if there was an error
+        if result.returncode != 0:
+            error_message = result.stderr
+            return f"Error: {error_message}"
+        
+        # # If no error, return the output
+        # output = result.stdout
+        return None
+    except Exception as e:
+        return f"Error: {str(e)}"   
+        
+code = '''
+print(helloworld)sflksdkfj
+'''
 
-with open(file_path, 'r') as file:
-    content = file.read()
-    code += content
+# with open(file_path, 'r') as file:
+#     content = file.read()
+#     code += content
 
-error_log = run_file(file_path)
+error_log = run_code(code)
 
 print(solve_error(code,error_log))
+
+# print(exec(code))
 
 

@@ -65,7 +65,7 @@ def solve_error(generated_code,error_log):
   code_prompt = (
     f"Understand the Error Logs: {error_log}"
     f"fix the given Code:\n {generated_code}\n"
-    f"Output in code only"
+    f"Output in code only.need no explanation"
   )
 
   code_repsonse = model.generate_content(code_prompt)
