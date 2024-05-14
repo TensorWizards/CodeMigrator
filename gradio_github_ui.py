@@ -12,6 +12,7 @@ def process_files(githubRepo,language):
     global generated_code
 
     repoContent = get_github_contents(githubRepo)
+    repoContent = repoContent[0]
 
     instructions = codeExplainFromContent(repoContent)
     generated_code = codeConvert(instructions,language)

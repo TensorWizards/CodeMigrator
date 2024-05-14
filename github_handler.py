@@ -37,13 +37,16 @@ def get_github_contents(githubRepo):
     contents = repo.get_contents("")
 
     # Iterate over the contents and read each file
+
+    files_list = []
+
     for content in contents:
         if content.type == "file":
             file_content = content.decoded_content.decode("utf-8")
             
-            return file_content
+            files_list.append(file_content)
         
-
+    return files_list
 
 def create_new_repo_save_files(repo_name,description="Demo Description",isPublic=False):
     repo = user.create_repo(
@@ -53,4 +56,3 @@ def create_new_repo_save_files(repo_name,description="Demo Description",isPublic
     )
     print(f"New Repository {repo.name} sucessfully created")
         
-
