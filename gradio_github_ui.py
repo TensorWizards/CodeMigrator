@@ -68,8 +68,6 @@ def strip_first_last_line(text):
     stripped_text = '\n'.join(stripped_lines)
     return stripped_text
 
-#Feature yet to be implemented.Temporarily we are just saving files in local directory
-#This Feature will create a new repo and publish it to Github
 
 
 def save_code(file_name):
