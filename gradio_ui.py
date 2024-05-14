@@ -1,17 +1,21 @@
 import gradio as gr
-from main import codeConvert,codeExplain,save_file
+from main import codeConvert,codeExplain,save_file,explain_genearated_code
 from openmodel import codeInput
 
 instructions = ""
 generated_code = ""
+explained_new_code = ""
 
 def process_files(files,language):
     file_names = files[0]
     global instructions
     global generated_code
+    global explained_new_code
+
     instructions =  codeInput(file_names)
     generated_code = codeConvert(instructions,language)
-    return  [instructions, generated_code]
+    explained_new_code = explain_genearated_code(generated_code)
+    return  [instructions, generated_code,explained_new_code]
 
 def strip_first_last_line(text):
     """
@@ -31,7 +35,7 @@ with gr.Blocks(title="CodeMigrator") as demo:
     gr.Interface(
         process_files,
         inputs=['files',gr.Dropdown(["python","java"])],
-        outputs=["textbox","markdown"],
+        outputs=["textbox","markdown","markdown"],
         allow_flagging="never"
     )
     
