@@ -1,4 +1,7 @@
 .env
 codemigrate
 __pycache__/
+eg
+cookies
 egp
+.gitignore
