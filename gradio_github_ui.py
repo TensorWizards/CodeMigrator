@@ -1,23 +1,61 @@
 import gradio as gr
 
 from main import codeExplain,codeConvert,save_file,codeExplainFromContent
-from github_handler import  get_github_contents,create_new_repo_save_files
+from github_handler import  get_github_contents,create_new_repo,save_files_to_repo
 
-instructions = ""
-generated_code = ""
+instructions = []
+generated_code = []
+lang = ""
+repo_name = ""
 
 
 def process_files(githubRepo,language):
     global instructions
     global generated_code
+    global lang
+
+    lang = language
+    instructions.clear()
+    generated_code.clear()
+
 
     repoContent = get_github_contents(githubRepo)
-    repoContent = repoContent[0]
+    repoContent = repoContent
 
-    instructions = codeExplainFromContent(repoContent)
-    generated_code = codeConvert(instructions,language)
+    
+    for j in range(len(repoContent)):
+        i = codeExplainFromContent(repoContent[j])
+        instructions.append(i)
 
-    return [instructions,generated_code]
+    for j in range(len(instructions)):
+        g = codeConvert(instructions[j],language)
+        generated_code.append(g)
+
+    instructions_str = ""
+    generated_code_str = ""
+
+    for i in range(len(instructions)):
+        instructions_str += f"\n\n{instructions[i]}"
+
+    for i in range(len(generated_code)):
+        instructions_str += f"\n\n{generated_code[i]}"
+
+    return [instructions_str,generated_code_str]
+
+
+def push_github(reponame):
+
+    global repo_name
+    global lang
+    global generated_code
+
+    repo_name = create_new_repo(reponame)
+
+    for i in range(len(generated_code)):
+        code = strip_first_last_line(generated_code[i])
+        save_files_to_repo(repo_name,f"test{i}",code,lang)
+
+    print("Sucessfully saved all the files to github")
 
 
 
@@ -29,8 +67,6 @@ def strip_first_last_line(text):
     stripped_lines = lines[1:-1]
     stripped_text = '\n'.join(stripped_lines)
     return stripped_text
-
-
 
 #Feature yet to be implemented.Temporarily we are just saving files in local directory
 #This Feature will create a new repo and publish it to Github
@@ -49,9 +85,11 @@ with gr.Blocks(title="CodeMigratorGithub") as demo:
         allow_flagging="never"
     )
     
-    file_name = gr.Textbox(label="File Name")
-    btn_savecode = gr.Button("Save Code")
-    btn_savecode.click(save_code,inputs=file_name)
+    file_name = gr.Textbox(label="Enter New Repo Name")
+    btn_savecode = gr.Button("Save Code to Github")
+    btn_savecode.click(push_github,inputs=file_name)
+
+
 
 
 demo.launch()
