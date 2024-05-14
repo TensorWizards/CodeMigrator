@@ -1,0 +1,93 @@
+program DataOperationWithDatabase;
+
+{$APPTYPE CONSOLE}
+
+uses
+  System.SysUtils, System.Classes, Data.DB, Data.SqlExpr, Data.DBXCommon, System.Generics.Collections;
+
+type
+  TDataOperation = class
+  public
+    class function PerformOperation(const Input: Integer): Integer; virtual; abstract;
+  end;
+
+  TAdditionOperation = class(TDataOperation)
+  public
+    class function PerformOperation(const Input: Integer): Integer; override;
+  end;
+
+  TSubtractionOperation = class(TDataOperation)
+  public
+    class function PerformOperation(const Input: Integer): Integer; override;
+  end;
+
+  TDatabaseUpdater = class
+  public
+    class procedure UpdateDatabase(OperationName: string; Input, Output: Integer);
+  end;
+
+{ TAdditionOperation }
+
+class function TAdditionOperation.PerformOperation(const Input: Integer): Integer;
+begin
+  Result := Input + 10;
+end;
+
+{ TSubtractionOperation }
+
+class function TSubtractionOperation.PerformOperation(const Input: Integer): Integer;
+begin
+  Result := Input - 5;
+end;
+
+{ TDatabaseUpdater }
+
+class procedure TDatabaseUpdater.UpdateDatabase(OperationName: string; Input, Output: Integer);
+begin
+  Writeln('Updating database with operation:', OperationName, ', Input:', Input, ', Output:', Output);
+  // Code to update the database with the operation details
+end;
+
+var
+  InputNumber: Integer;
+  OperationType: Char;
+  OutputNumber: Integer;
+  Operation: TDataOperation;
+begin
+  try
+    Writeln('Welcome to Data Operation Program');
+
+    // Input operation type
+    Write('Enter operation type (A for Addition, S for Subtraction): ');
+    Readln(OperationType);
+
+    // Input number
+    Write('Enter a number: ');
+    Readln(InputNumber);
+
+    // Perform operation based on user input
+    case OperationType of
+      'A': Operation := TAdditionOperation.Create;
+      'S': Operation := TSubtractionOperation.Create;
+    else
+      begin
+        Writeln('Invalid operation type.');
+        Exit;
+      end;
+    end;
+
+    OutputNumber := Operation.PerformOperation(InputNumber);
+
+    // Output result to the user
+    Writeln('Result:', OutputNumber);
+
+    // Update database with operation details
+    TDatabaseUpdater.UpdateDatabase(OperationType, InputNumber, OutputNumber);
+
+    // Clean up
+    Operation.Free;
+  except
+    on E: Exception do
+      Writeln('Error:', E.ClassName, ':', E.Message);
+  end;
+end.
