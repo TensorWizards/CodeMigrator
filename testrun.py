@@ -2,8 +2,6 @@ import sys
 import subprocess
 from main import solve_error
 
-file_path = "./results/helloworld.py"
-
 def run_file(filename):
     try:
         # Execute the file and capture the output
@@ -36,19 +34,3 @@ def run_code(code):
         return None
     except Exception as e:
         return f"Error: {str(e)}"   
-        
-code = '''
-print(helloworld)sflksdkfj
-'''
-
-# with open(file_path, 'r') as file:
-#     content = file.read()
-#     code += content
-
-error_log = run_code(code)
-
-print(solve_error(code,error_log))
-
-# print(exec(code))
-
-

@@ -42,12 +42,7 @@ def codeConvert(instructions,language):
       f"using relevant libraries for that task.\nDescription: {instructions}"
       f"Let the response be the code in markdown format."
   )
-
-
-  # code_prompt = f"You are legacy to modern programming code generator. You\'ll be given a brief description of the legacy code. You need to write a {language} code based on that description such that the entire description provided is followed without any loss in programming feature from the legacy. Your response should be a single python markdown implementing all the features mentioned in the description. If the code needs to have custom implementation, then implement it using relevant libraries for that task.
-  # Description: {instructions}"
-
-  # prompt2 = f"Generate a {language} Code using Following Instruction :\n{instructions}"
+  
   code_response = model.generate_content(code_prompt)
 
   return code_response.text

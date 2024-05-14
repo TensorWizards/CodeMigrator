@@ -36,17 +36,16 @@ def test_code():
     global generated_code
     test_code = strip_first_last_line(generated_code)
     error_log = run_code(test_code)
-    print(test_code)
     corrected_code = solve_error(test_code,error_log)
-    print(f"Corrected Code :\n{corrected_code}")
-    return str(error_log)+f"'''{corrected_code}'''"
+    print(f"{error_log}")
+    return corrected_code
     
     
 with gr.Blocks(title="CodeMigrator") as demo:
     gr.Interface(
         process_files,
         inputs=['files',gr.Dropdown(["python","java"])],
-        outputs=["textbox","markdown","markdown"],
+        outputs=[gr.Textbox(label=None),"markdown","markdown"],
         allow_flagging="never"
     )
 

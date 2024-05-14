@@ -13,23 +13,6 @@ g = Github(GITHUB_TOKEN)
 # Get the authenticated user
 user = g.get_user()
 
-# Create a new repository
-repo_name = "MyNewRepository"
-description = "This is my new repository created with PyGithub"
-private = False  # Set to True for a private repository
-
-# # Create the repository
-# repo = user.create_repo(
-#     name=repo_name,
-#     description=description,
-#     private=private,
-#     has_issues=True,  # Enable issues
-#     has_wiki=True,  # Enable wiki
-#     has_downloads=True,  # Enable downloads
-#     auto_init=True,  # Initialize with a README
-# )
-
-
 def get_github_contents(githubRepo):
     repo = g.get_repo(githubRepo)
 
