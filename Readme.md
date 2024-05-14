@@ -22,22 +22,7 @@ python gradio_ui.py
 ```
 
 
-#### How to Run COBOL files 
 
-On your Linux Terminal
-
-```
-sudo apt-get install open-cobol
-```
-
-Convert COBOL to executable file
-```
-cobc -x -o hello hello.cbl
-```
-
-```
-./hello
-```
 
 
 
