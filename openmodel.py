@@ -18,7 +18,12 @@ chatbot.get_available_llm_models()
 chatbot.switch_llm(0)
 chatbot.new_conversation(switch_to = True)
 
-def codeinput(content):
+def codeInput(filepath):
+    with open(filepath, 'r') as file:
+        content = file.read()
+
     prompt = f"You will be given legacy code as input. You need to understand the entire code and generate detailed description for code such  that the description generated explains all the variables, routines, classes, blocks or other structures present in the legacy code and if there are any hardcoded input values mentioned in the code show it in the description and how the code actually works. \n{content}"  
     query_result = chatbot.chat(prompt)
     return query_result
+
+
