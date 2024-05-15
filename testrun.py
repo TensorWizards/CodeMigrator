@@ -24,13 +24,14 @@ def run_code(code):
         # Execute the file and capture the output
         result = exec(code)
         
-        # Check if there was an error
-        if result.returncode != 0:
-            error_message = result.stderr
-            return f"Error: {error_message}"
-        
-        # # If no error, return the output
-        # output = result.stdout
         return "Sucessfully Executed"
     except Exception as e:
         return f"Error: {str(e)}"   
+
+
+
+
+code = """
+import os"""
+
+print(run_code(code))
