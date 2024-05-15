@@ -84,8 +84,6 @@ def generate_tests():
     test_results = f""
     global generated_code
 
-    print(generated_code)
-
     for i in range(len(generated_code)):
         code = strip_first_last_line(generated_code[i])
         error_log = run_code(code)
@@ -122,7 +120,7 @@ with gr.Blocks(title="CodeMigratorGithub") as demo:
 
 
         btn_run_test = gr.Button("Run Test Programs")
-        test_outputs = gr.Textbox()
+        test_outputs = gr.Markdown()
         btn_run_test.click(generate_tests, outputs=test_outputs)
 
 

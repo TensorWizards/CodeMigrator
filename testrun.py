@@ -31,7 +31,7 @@ def run_code(code):
 
 
 
-code = """
-import os"""
+# code = """
+# import os"""
 
-print(run_code(code))
+# print(run_code(code))
