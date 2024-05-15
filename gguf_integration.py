@@ -1,8 +1,8 @@
 from huggingface_hub import hf_hub_download
 from llama_cpp import Llama
 
-model_name = "TheBloke/Mixtral-8x7B-Instruct-v0.1-GGUF"
-model_file = "mixtral-8x7b-instruct-v0.1.Q4_K_M.gguf"
+model_name = "TheBloke/CodeLlama-7B-Instruct-GGUF"
+model_file = "codellama-7b-instruct.Q4_K_M.gguf"
 
 model_path = hf_hub_download(model_name, filename=model_file)
 

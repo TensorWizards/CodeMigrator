@@ -90,7 +90,8 @@ def generate_tests():
         code = strip_first_last_line(generated_code[i])
         error_log = run_code(code)
         solutionCode = solve_error(code,error_log)
-        test_results += f"\n\n{error_log}\{solutionCode}"
+        print(error_log)
+        test_results += solutionCode
          
 
     print(test_results)
