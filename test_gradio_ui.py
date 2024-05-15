@@ -36,7 +36,12 @@ def test_code():
     global generated_code
     test_code = strip_first_last_line(generated_code)
     error_log = run_code(test_code)
-    corrected_code = solve_error(test_code,error_log)
+
+    if error_log == "Sucessfully Executed":
+        corrected_code = "Sucessfully Executed"
+    else:
+        corrected_code = solve_error(test_code,error_log)
+
     print(f"{error_log}")
     return corrected_code
     

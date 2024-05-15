@@ -49,7 +49,7 @@ def codeConvert(instructions,language):
 
 def explain_genearated_code(generated_code):
   code_prompt = (
-    f"Explain the code with proper documentation.You need to understand the entire code and generate detailed description of it such that the description generated explains all the variables, routines, classes, blocks or other structures: \n{generated_code}"
+    f"Explain the code .You need to understand the entire code and generate detailed description of it such that the description generated explains all the variables, routines, classes, blocks or other structures: \n{generated_code}"
   )
 
   code_response = model.generate_content(code_prompt)
@@ -60,7 +60,7 @@ def solve_error(generated_code,error_log):
   code_prompt = (
     f"Understand the Error Logs: {error_log}"
     f"fix the given Code:\n {generated_code}\n"
-    f"Output in code only.need no explanation"
+    f"Explain the Solution"
   )
 
   code_repsonse = model.generate_content(code_prompt)
