@@ -1,6 +1,7 @@
 import gradio as gr
 from main import codeConvert,codeExplain,save_file,explain_genearated_code
-from openmodel import codeInput
+from main import codeExplain   # gemini model
+from openmodel import codeInput # OpenSource model
 
 instructions = ""
 generated_code = ""
@@ -12,7 +13,7 @@ def process_files(files,language):
     global generated_code
     global explained_new_code
 
-    instructions =  codeInput(file_names)
+    instructions =  codeExplain(file_names)
     generated_code = codeConvert(instructions,language)
     explained_new_code = explain_genearated_code(generated_code)
     return  [instructions, generated_code,explained_new_code]
@@ -35,7 +36,7 @@ with gr.Blocks(title="CodeMigrator") as demo:
     gr.Interface(
         process_files,
         inputs=['files',gr.Dropdown(["python","java"])],
-        outputs=["textbox","markdown","markdown"],
+        outputs=["markdown","markdown","markdown"],
         allow_flagging="never"
     )
     
