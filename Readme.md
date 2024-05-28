@@ -22,6 +22,13 @@ python gradio_ui.py
 ```
 
 
+## Screenshots
+
+
+Automatic Testing and Updating file in GitHub:
+
+![image](https://github.com/dszvivian/CodeMigrator/assets/93795205/de34a878-7413-4117-83d4-18c0e001251f)
+
 
 
 
