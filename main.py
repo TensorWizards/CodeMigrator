@@ -60,7 +60,7 @@ def solve_error(generated_code,error_log):
   code_prompt = (
     f"Understand the Error Logs: {error_log}"
     f"fix the given Code:\n {generated_code}\n"
-    f"Explain the Solution"
+    f"Answer in Code Only"
   )
 
   code_repsonse = model.generate_content(code_prompt)
@@ -77,6 +77,15 @@ def save_file(filename,data):
   with open(file_path, 'w') as file: 
       file.write(data)
 
+
+def remove_markdown(text):
+    """
+    Removes markdown
+    """
+    lines = text.splitlines()
+    stripped_lines = lines[1:-1]
+    stripped_text = '\n'.join(stripped_lines)
+    return stripped_text
 
 
 

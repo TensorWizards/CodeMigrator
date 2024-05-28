@@ -87,12 +87,17 @@ def generate_tests():
     for i in range(len(generated_code)):
         code = strip_first_last_line(generated_code[i])
         error_log = run_code(code)
-        solutionCode = solve_error(code,error_log)
+
+        if error_log == "Sucessfully Executed":
+            test_results += error_log
+        else:
+            solutionCode = solve_error(code,error_log)
+            test_results += f"\n## test{i+1}  \n:{solutionCode}  \n"
         print(error_log)
-        test_results += solutionCode
+        
          
 
-    print(test_results)
+    # print(test_results)
 
     return test_results
         

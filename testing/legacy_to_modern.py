@@ -42,12 +42,10 @@ def codeExplainFromContent(content):
 def codeConvert(instructions,language = "python"):
 
     code_prompt = (
-    f"You are legacy to modern programming code generator. You\'ll be given a brief description of the legacy code. "
-    f"You need to write a {language} code based on that description such that the entire description provided is followed "
-    f"without any loss in programming feature from the legacy. Your response should be a single python markdown implementing "
-    f"all the features mentioned in the description. If the code needs to have custom implementation, then implement it "
+    f"You need to write a {language} code based on the given description such that the entire description provided is followed "
+    f"without any loss in programming feature. Your response should be a single python markdown implementing "
     f"using relevant libraries for that task.\nDescription: {instructions}"
-    f"Let the response contain only code in markdown format."
+    f"Let the response contain only code in markdown format. Don't include any example usage."
     )
 
     code_response = model.generate_content(code_prompt)
@@ -64,7 +62,7 @@ def file_creation(file_name, code):
         code_file.write(code)
 
     prompt = """{code}
-    Generate a requirements.txt file. let the response be in markdown. Do not include any explanation. Just the name of the packages.
+    Give all packages used in the code in the format of requirements.txt. Do not include any explanation. Just the name of the packages. Let the response be in markdown.
     """
     requirement = model.generate_content(prompt)
     mark_text = requirement.text
@@ -76,8 +74,9 @@ def file_creation(file_name, code):
         text_file.write(stripped_text)
 
 def create_repo_and_file(repo_name,description="Demo Description",isPrivate=False, file_name=None):
+    new_repo_name = repo_name+"-python"
     repo = user.create_repo(
-        name=repo_name+"-python",
+        name= new_repo_name,
         description=description,
         private = isPrivate
     )
@@ -91,6 +90,8 @@ def create_repo_and_file(repo_name,description="Demo Description",isPrivate=Fals
         req_content = file.read()
 
     repo.create_file('requirements.txt', "requirements_file", req_content, branch="main")
+
+    return file_path, "igsci/"+new_repo_name
 
 
 

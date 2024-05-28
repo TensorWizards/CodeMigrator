@@ -24,7 +24,7 @@ def get_repo_issue(repo_name):
 
     return issue
 
-def solve_issue(issue, repo_name):
+def solve_issue(issue, repo_name, test_code):
     repo = g.get_repo(repo_name)
     
     contents = repo.get_contents("")
@@ -48,3 +48,6 @@ let the response be python code in markdown state donot include any explanation.
 
             with open(f"{name}", 'w') as edited_file:
                 edited_file.write(stripped_text)
+
+def close_issue(issue):
+    issue.close()

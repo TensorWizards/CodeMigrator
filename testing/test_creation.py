@@ -32,11 +32,13 @@ user = g.get_user()
 #             return file_content
         
 
-def create_test_case(code):
+def create_test_case(code, path):
     prompt = f"""
 {code}
 the above code is a python file. give a python code that imports this code as a main file and then uses it.
 Let the response be a python file in a markdown file do not include output.
+Make sure to import all the packages that will be used by the program.
+while importing the file name is {path}
 """
     code_response = model.generate_content(prompt)
 
@@ -48,8 +50,11 @@ Let the response be a python file in a markdown file do not include output.
     with open("test.py", 'w') as test_code:
         test_code.write(stripped_text)
 
+
+    return stripped_text
+
 def run_test_case():
-    subprocess.run(["pip", "install", "-r", "requirements.txt"])
+    subprocess.run(["pip", "install", "-r", "requirements.txt", "-q"])
     subprocess.run("python test.py 2> output.log", shell=True)
 
 
@@ -72,6 +77,9 @@ def issue_creation(repo_name):
 
     if content:
         repo.create_issue(title="Error", body=content)
+        return "Error"
+    else:
+        return "No Error"
 
     # elif repo.get_issue(1):
     #     issue = repo.get_issue(1)

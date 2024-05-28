@@ -31,6 +31,24 @@ def get_github_contents(githubRepo):
         
     return files_list
 
+
+def get_first_github_contents(githubRepo):
+    """
+    returns the contents of first file in the Repo
+    """
+    repo = g.get_repo(githubRepo)
+
+    # Get the contents of the repository
+    contents = repo.get_contents("")
+
+    # Iterate over the contents and read only first file
+
+    files_content = ""
+
+    for content in contents:
+        if content.type == "file":
+            return content.decoded_content.decode("utf-8")
+
 def create_new_repo(repo_name,description="Demo Description",isPublic=False):
 
     repo = user.create_repo(
@@ -50,3 +68,10 @@ def save_files_to_repo(repo_name,filename,filecontent,language):
     if language=="java":
         repo.create_file(f"{filename}.java","test",filecontent)
     
+def update_code(repolink,filename,updated_contents):
+    repo = g.get_repo(repolink)
+
+    contents =  repo.get_contents(filename)
+    repo.update_file(filename,"testing update",updated_contents,contents.sha)
+
+    print("Successfully Updated File")
